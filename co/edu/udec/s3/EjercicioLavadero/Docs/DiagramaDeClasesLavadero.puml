@@ -21,6 +21,14 @@ class Empleado {
     - String numero_telefono;
 }
 
+class Vehiculo {
+    - int vehiculo_id;
+    - String planta;
+    - String marca;
+    - String tipo;
+    - String color;
+}
+
 class Producto {
     - int producto_id;
     - String codigo;
@@ -28,7 +36,7 @@ class Producto {
     - String descripcion;
     - String imagen_representativa;
     - String estado_disponibilidad;
-    - String categoria;
+    - Categoria categoria;
     - String marca;
     - String stock;
     - List<Proveedor> listaDeProveedores;
@@ -39,6 +47,25 @@ class Categoria {
     - String codigo;
     - String nombre;
     - String icono;
+}
+
+class Proveedor {
+    - int proveedor_id;
+    - String tipo_documento;
+    - String numero_documento;
+    - String nombre;
+    - String correo;
+    - String numero_telefono;
+    - String Cuenta_Bancaria;
+    - List<Producto> listaDeProductos;
+}
+
+class Empresa {
+    - int empresa_id;
+    - String nombre;
+    - String correo;
+    - String direccion;
+    - String numero_telefono;
 }
 
 class Cotizacion {
@@ -62,14 +89,14 @@ class NotaCorrecionPedido {
     - Date fecha_maxima_confirmacion;
     - Date fecha_maxima_entrega;
     - String codigo;
-    - String informacion_proveedor;
-    - String informacion_empresa;
+    - Proveedor proveedor;
+    - Empresa empresa;
 }
 
 class ComprobantePago {
     - int comprobante_id;
     - Date fecha_pago;
-    - String informacion_empresa;
+    - Empresa empresa;
     - int valor_pagar;
     - String numero_cuenta;
 }
@@ -134,14 +161,23 @@ class Cubiculo {
 ' RELACIONES
 Cliente "1" -- "*" Servicio : Solicitar
 Empleado "1" -- "1" Contrato : Tener
+Empresa "1" -- "*" Empleado : Contar
+Empresa "1" -- "*" (Producto, Servicio) : Disponer
 Producto "*" -- "1" Categoria : Estar
+Cliente "1" -- "1" Vehiculo : Tener
+Proveedor "1" -- "*" Producto : Proveer
+Proveedor "1" -- "1" NotaCorrecionPedido : Responder
+Empleado "1" -- "1" Vehiculo : Atender
 Cotizacion "1" -- "*" Producto : Requerir
 Cotizacion "*" -- "1" NotaCorrecionPedido : Generar
+Empleado "1" -- "1" Cotizacion : Solicitar
 Cliente "1" -- "*" Producto : Comprar
 Producto "*" -- "1" SolicitudVentaProducto : Tener
 Servicio "*" -- "1" SolicitudVentaServicio : Tener
 Empleado "1" -- "1" Cliente : Atender
 Producto "*" -- "1" ComprobantePago : Tener
 Servicio "*" -- "1" ComprobantePago : Tener
+Empresa "1" -- "*" Cubiculo : Disponer
 Empleado "*" -- "1" Cubiculo : Trabajar
-Servicio "1" -- "1" Cubiculo : Ocupar
+Servicio "*" -- "1" Cubiculo : Prestar
+Cubiculo "1" -- "1" Vehiculo : Albergar
