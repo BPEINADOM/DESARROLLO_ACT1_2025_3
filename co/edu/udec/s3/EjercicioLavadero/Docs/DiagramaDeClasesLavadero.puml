@@ -1,0 +1,147 @@
+@startuml Lavadero
+
+class Cliente{
+    - int client_id;
+    - String nombre;
+    - String apellido;
+    - String correo;
+    - String numero_telefono;
+}
+
+class Empleado {
+    - int empleado_id;
+    - String tipo_documento;
+    - String numero_documento;
+    - String nombres;
+    - String apellidos;
+    - Date fecha_nacimiento;
+    - String genero;
+    - String correo;
+    - String direccion;
+    - String numero_telefono;
+}
+
+class Producto {
+    - int producto_id;
+    - String codigo;
+    - String precio;
+    - String descripcion;
+    - String imagen_representativa;
+    - String estado_disponibilidad;
+    - String categoria;
+    - String marca;
+    - String stock;
+    - List<Proveedor> listaDeProveedores;
+}
+
+class Categoria {
+    - int categoria_id;
+    - String codigo;
+    - String nombre;
+    - String icono;
+}
+
+class Cotizacion {
+    - int cotizacion_id;
+    - String codigo;
+    - String nombre;
+    - String marca;
+    - String descripcion;
+    - String estado;
+    - String tiempo_garantia;
+    - int precio_unitario;
+    - int precio_iva;
+    - int descuento;
+    - int precio_iva_descuento;
+}
+
+class NotaCorrecionPedido {
+    - int nota_id;
+    - String codigo;
+    - Date fecha_emision;
+    - Date fecha_maxima_confirmacion;
+    - Date fecha_maxima_entrega;
+    - String codigo;
+    - String informacion_proveedor;
+    - String informacion_empresa;
+}
+
+class ComprobantePago {
+    - int comprobante_id;
+    - Date fecha_pago;
+    - String informacion_empresa;
+    - int valor_pagar;
+    - String numero_cuenta;
+}
+
+class SolicitudVentaProducto {
+    - int solicitud_producto_id;
+    - String detalle_articulo;
+    - int numero_item;
+    - String codigo;
+    - String marca;
+    - int precio;
+    - int porcentaje_iva;
+    - int valor_iva;
+    - int precio_iva;
+    - int precio_iva_descuento;
+    - int precio_total;
+}
+
+class SolicitudVentaServicio {
+    - int solicitud_servicio_id;
+    - String planta;
+    - String marca;
+    - String tipo;
+    - String color;
+    - String servicio;
+}
+
+class Servicio {
+    - int servicio_id;
+    - String nombre;
+    - String descripcion;
+    - Date fecha_inicio;
+    - Date fecha_finalizacion;
+    - String hora_inicio;
+    - String hora_finalizacion;
+    - String nombre_empleado;
+    - int precio;
+    - int porcentaje_iva;
+    - int valor_iva;
+    - int precio_iva;
+    - int precio_iva_descuento;
+    - int precio_total;
+}
+
+class Contrato {
+    - int contrato_id;
+    - Date fecha_inicio;
+    - int sueldo_base;
+    - String cargo;
+    - String horario;
+}
+
+class Cubiculo {
+    - int cubiculo_int;
+    - String codigo;
+    - String nombre;
+    - int area;
+    - String estado;
+}
+
+
+' RELACIONES
+Cliente "1" -- "*" Servicio : Solicitar
+Empleado "1" -- "1" Contrato : Tener
+Producto "*" -- "1" Categoria : Estar
+Cotizacion "1" -- "*" Producto : Requerir
+Cotizacion "*" -- "1" NotaCorrecionPedido : Generar
+Cliente "1" -- "*" Producto : Comprar
+Producto "*" -- "1" SolicitudVentaProducto : Tener
+Servicio "*" -- "1" SolicitudVentaServicio : Tener
+Empleado "1" -- "1" Cliente : Atender
+Producto "*" -- "1" ComprobantePago : Tener
+Servicio "*" -- "1" ComprobantePago : Tener
+Empleado "*" -- "1" Cubiculo : Trabajar
+Servicio "1" -- "1" Cubiculo : Ocupar
