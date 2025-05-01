@@ -82,13 +82,13 @@ class Cotizacion {
     - int precio_iva_descuento;
 }
 
-class NotaCorrecionPedido {
+class NotaCorreccionPedido {
     - int nota_id;
     - String codigo;
     - Date fecha_emision;
     - Date fecha_maxima_confirmacion;
     - Date fecha_maxima_entrega;
-    - String codigo;
+    - String codigo_pedido;
     - Proveedor proveedor;
     - Empresa empresa;
 }
@@ -166,10 +166,10 @@ Empresa "1" -- "*" (Producto, Servicio) : Disponer
 Producto "*" -- "1" Categoria : Estar
 Cliente "1" -- "1" Vehiculo : Tener
 Proveedor "1" -- "*" Producto : Proveer
-Proveedor "1" -- "1" NotaCorrecionPedido : Responder
+Proveedor "1" -- "1" NotaCorreccionPedido : Responder
 Empleado "1" -- "1" Vehiculo : Atender
 Cotizacion "1" -- "*" Producto : Requerir
-Cotizacion "*" -- "1" NotaCorrecionPedido : Generar
+Cotizacion "*" -- "1" NotaCorreccionPedido : Generar
 Empleado "1" -- "1" Cotizacion : Solicitar
 Cliente "1" -- "*" Producto : Comprar
 Producto "*" -- "1" SolicitudVentaProducto : Tener
